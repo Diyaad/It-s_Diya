@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import Link from "next/link";
+import Image from "next/image";
 
 // 1. EXTEND WINDOW INTERFACE FOR TYPESCRIPT SAFETY
 declare global {
@@ -22,7 +23,7 @@ export default function Home() {
     window.history.scrollRestoration = "manual";
     window.scrollTo(0, 0);
 
-    // Now type-safe: no more 'any'
+
     const hasSeenIntro = window.hasSeenIntro;
 
     const ctx = gsap.context(() => {
@@ -135,7 +136,7 @@ export default function Home() {
           ref={subRef}
           className="mt-40 text-sm uppercase tracking-[0.3em] font-medium text-gray-500"
         >
-          Designer, Artist, Creator
+          Creative. Analytical. Intentional.
         </p>
       </div>
 
@@ -157,15 +158,14 @@ export default function Home() {
             <div className="col-span-6 flex flex-col gap-4 h-[600px]">
               <div className="h-[25%] flex items-start">
                 <p className="text-lg font-medium leading-snug text-black">
-                  Multidisciplinary college senior majoring in Computer Science
-                  and Business Analytics and Living in New Jersey. Seeking
-                  experience in Finance, Technology Consulting & Business
-                  Operations.
+                Multidisciplinary senior majoring in Computer Science and Business Analytics, based in New Jersey. 
+                Passionate about using technology, data, and design to improve financial systems, consulting workflows, and business operations.
                 </p>
               </div>
               <div className="flex-1 bg-[#B8C6F1] rounded-3xl" />
             </div>
-            <div className="col-span-6 bg-[#E2E8C0] rounded-3xl h-150" />
+            <div className="col-span-6 bg-[#E2E8C0] rounded-3xl h-150">
+            <Image src="app/photos/IMG_3989 2.JPG" width={0} height={0} alt="UN office"></Image></div>
             <div className="col-span-8 bg-[#F1B8D9] rounded-3xl h-80" />
             <div className="col-span-4 bg-[#89a3d7] rounded-3xl h-80" />
           </section>
@@ -175,10 +175,10 @@ export default function Home() {
           <div className="flex justify-between items-end mb-12">
             <div className="max-w-4xl">
               <h2 className="text-6xl mb-4 font-bold uppercase tracking-tighter">
-                Recent Research
+                Leadership & Activities
               </h2>
               <p className="text-lg font-medium max-w-2xl text-gray-300 leading-snug">
-                Was honored to volunteer at the 28th General Assembly of the
+                '''Was honored to volunteer at the 28th General Assembly of the
                 Conference of NGOs... representing{" "}
                 <a
                   href="https://www.bpw-international.org/"
@@ -187,8 +187,10 @@ export default function Home() {
                 >
                   BPW International
                 </a>
-                .
+                .'''
+                Learning, leading, and making an impact through mentorship and research.
               </p>
+
             </div>
             <div className="flex gap-4 mb-2">
               <button
@@ -220,7 +222,7 @@ export default function Home() {
           <div className="flex justify-between items-end mb-12">
             <div className="max-w-4xl">
               <h2 className="text-6xl mb-4 font-bold uppercase tracking-tighter">
-                Projects
+                Projects/Fellowship
               </h2>
               <p className="text-lg font-medium max-w-2xl text-gray-700 leading-snug">
                 <Link

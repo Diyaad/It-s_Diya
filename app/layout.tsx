@@ -22,7 +22,7 @@ export const syne = Syne({
 
 export const metadata: Metadata = {
   title: "Diya's Portfolio",
-  description: "Portfolio",
+  description: "Diya's  Portfolio",
   icons: {
     icon: "/favicon.ico",
   },
@@ -44,3 +44,4 @@ export default function RootLayout({
     </html>
   );
 }
+
