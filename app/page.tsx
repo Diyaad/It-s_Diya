@@ -1,65 +1,359 @@
-import Image from "next/image";
+"use client";
+
+import React, { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+import Link from "next/link";
+
+// 1. EXTEND WINDOW INTERFACE FOR TYPESCRIPT SAFETY
+declare global {
+  interface Window {
+    hasSeenIntro?: boolean;
+  }
+}
 
 export default function Home() {
+  const [loading, setLoading] = useState(true);
+  const nameRef = useRef<HTMLDivElement>(null);
+  const subRef = useRef<HTMLParagraphElement>(null);
+  const preloaderRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    window.history.scrollRestoration = "manual";
+    window.scrollTo(0, 0);
+
+    // Now type-safe: no more 'any'
+    const hasSeenIntro = window.hasSeenIntro;
+
+    const ctx = gsap.context(() => {
+      if (hasSeenIntro) {
+        setLoading(false);
+        gsap.set(preloaderRef.current, { display: "none" });
+        gsap.set(nameRef.current, {
+          position: "absolute",
+          top: "24px",
+          left: "96px",
+          scale: 0.35,
+          xPercent: 0,
+          yPercent: 0,
+          transformOrigin: "left top",
+        });
+        return;
+      }
+
+      const tl = gsap.timeline({
+        onComplete: () => {
+          setLoading(false);
+          window.hasSeenIntro = true;
+          gsap.set(nameRef.current, {
+            position: "absolute",
+            top: "24px",
+          });
+        },
+      });
+
+      gsap.set(preloaderRef.current, { backgroundColor: "#ffffff" });
+
+      tl.from(".char", {
+        y: 150,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.1,
+        ease: "expo.out",
+      })
+        .from(
+          subRef.current,
+          {
+            opacity: 0,
+            y: 20,
+            duration: 0.8,
+          },
+          "-=0.5",
+        )
+        .to(nameRef.current, {
+          delay: 0.8,
+          duration: 1.5,
+          scale: 0.35,
+          top: "24px",
+          left: "96px",
+          xPercent: 0,
+          yPercent: 0,
+          transformOrigin: "left top",
+          ease: "expo.inOut",
+        })
+        .to(
+          subRef.current,
+          {
+            opacity: 0,
+            duration: 0.5,
+          },
+          "<",
+        )
+        .to(
+          preloaderRef.current,
+          {
+            opacity: 0,
+            duration: 0.8,
+            pointerEvents: "none",
+          },
+          "-=0.3",
+        );
+    });
+
+    return () => ctx.revert();
+  }, []);
+
+  const scroll = (direction: "left" | "right") => {
+    if (scrollRef.current) {
+      const { scrollLeft, clientWidth } = scrollRef.current;
+      const scrollTo =
+        direction === "left"
+          ? scrollLeft - clientWidth / 2
+          : scrollLeft + clientWidth / 2;
+      scrollRef.current.scrollTo({ left: scrollTo, behavior: "smooth" });
+    }
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <>
+      <div
+        ref={nameRef}
+        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[110] flex overflow-hidden text-9xl font-bold tracking-tighter text-black pointer-events-none"
+      >
+        {"Diya".split("").map((char, i) => (
+          <span key={i} className="char inline-block">
+            {char}
+          </span>
+        ))}
+      </div>
+
+      <div
+        ref={preloaderRef}
+        className="fixed inset-0 z-[100] flex items-center justify-center bg-white"
+      >
+        <p
+          ref={subRef}
+          className="mt-40 text-sm uppercase tracking-[0.3em] font-medium text-gray-500"
+        >
+          Designer, Artist, Creator
+        </p>
+      </div>
+
+      <div className="bg-white relative">
+        <main className="min-h-screen px-24 pt-6">
+          <nav className="flex items-center justify-between mb-14">
+            <div className="w-32 h-10 invisible">Diya</div>
+            <div className="flex gap-8 text-sm font-medium text-black">
+              <Link href="/about" className="hover:underline">
+                About
+              </Link>
+              <Link href="/projects" className="hover:underline">
+                Projects
+              </Link>
+            </div>
+          </nav>
+
+          <section className="grid grid-cols-12 gap-4">
+            <div className="col-span-6 flex flex-col gap-4 h-[600px]">
+              <div className="h-[25%] flex items-start">
+                <p className="text-lg font-medium leading-snug text-black">
+                  Multidisciplinary college senior majoring in Computer Science
+                  and Business Analytics and Living in New Jersey. Seeking
+                  experience in Finance, Technology Consulting & Business
+                  Operations.
+                </p>
+              </div>
+              <div className="flex-1 bg-[#B8C6F1] rounded-3xl" />
+            </div>
+            <div className="col-span-6 bg-[#E2E8C0] rounded-3xl h-150" />
+            <div className="col-span-8 bg-[#F1B8D9] rounded-3xl h-80" />
+            <div className="col-span-4 bg-[#89a3d7] rounded-3xl h-80" />
+          </section>
+        </main>
+
+        <section className="bg-[#1A1816] py-16 px-24 text-white overflow-hidden mt-20">
+          <div className="flex justify-between items-end mb-12">
+            <div className="max-w-4xl">
+              <h2 className="text-6xl mb-4 font-bold uppercase tracking-tighter">
+                Recent Research
+              </h2>
+              <p className="text-lg font-medium max-w-2xl text-gray-300 leading-snug">
+                Was honored to volunteer at the 28th General Assembly of the
+                Conference of NGOs... representing{" "}
+                <a
+                  href="https://www.bpw-international.org/"
+                  target="_blank"
+                  className="text-inherit underline underline-offset-4 hover:opacity-70"
+                >
+                  BPW International
+                </a>
+                .
+              </p>
+            </div>
+            <div className="flex gap-4 mb-2">
+              <button
+                onClick={() => scroll("left")}
+                className="w-12 h-12 flex items-center justify-center border border-white/20 rounded-full hover:bg-white hover:text-black transition-all"
+              >
+                ←
+              </button>
+              <button
+                onClick={() => scroll("right")}
+                className="w-12 h-12 flex items-center justify-center border border-white/20 rounded-full hover:bg-white hover:text-black transition-all"
+              >
+                →
+              </button>
+            </div>
+          </div>
+          <div
+            ref={scrollRef}
+            className="flex gap-6 overflow-x-auto no-scrollbar pb-4 scroll-smooth items-start"
+          >
+            <div className="min-w-[300px] h-[450px] bg-[#E2E8C0] rounded-3xl flex-shrink-0" />
+            <div className="min-w-[600px] h-[450px] bg-[#CFF7E2] rounded-3xl flex-shrink-0" />
+            <div className="min-w-[400px] h-[450px] bg-[#B8C6F1] rounded-3xl flex-shrink-0" />
+            <div className="min-w-[250px] h-[450px] bg-[#F1B8D9] rounded-3xl flex-shrink-0" />
+          </div>
+        </section>
+
+        <section className="bg-[#ffffff] py-16 px-24 text-black overflow-hidden ">
+          <div className="flex justify-between items-end mb-12">
+            <div className="max-w-4xl">
+              <h2 className="text-6xl mb-4 font-bold uppercase tracking-tighter">
+                Projects
+              </h2>
+              <p className="text-lg font-medium max-w-2xl text-gray-700 leading-snug">
+                <Link
+                  href="/projects"
+                  className="flex items-center gap-1 group text-black no-underline"
+                >
+                  Research and Internship projects.{" "}
+                  <span className="text-xl leading-none transition-transform group-hover:translate-x-1">
+                    →
+                  </span>
+                </Link>
+              </p>
+            </div>
+          </div>
+          <CardGridSection />
+        </section>
+
+        <Footer />
+      </div>
+
+      <style jsx global>{`
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
+    </>
+  );
+}
+
+// ... Card, CardGridSection, and Footer components remain same as previous
+function Card({ frontColor, backColor, title, description }: CardProps) {
+  const [isFlipped, setIsFlipped] = useState(false);
+  return (
+    <div
+      className="group h-[400px] [perspective:1000px] cursor-pointer"
+      onClick={() => setIsFlipped(!isFlipped)}
+    >
+      <div
+        className={`relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] ${isFlipped ? "[transform:rotateY(180deg)]" : ""}`}
+      >
+        <div
+          className="absolute inset-0 w-full h-full rounded-3xl p-8 flex flex-col justify-end [backface-visibility:hidden]"
+          style={{ backgroundColor: frontColor }}
+        >
+          <h3 className="text-2xl font-bold text-black uppercase tracking-tighter">
+            {title}
+          </h3>
+          <p className="text-sm text-black/60 font-medium">Click to flip</p>
+        </div>
+        <div
+          className="absolute inset-0 w-full h-full rounded-3xl p-8 flex flex-col items-center justify-center text-center [backface-visibility:hidden] [transform:rotateY(180deg)]"
+          style={{ backgroundColor: backColor }}
+        >
+          <p className="text-lg font-medium text-black leading-snug">
+            {description}
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </div>
     </div>
   );
+}
+
+function CardGridSection() {
+  const cards = [
+    {
+      front: "#E2E8C0",
+      back: "#D9D9D9",
+      title: "Strategy",
+      desc: "Deep dive into business analytics.",
+    },
+    {
+      front: "#CFF7E2",
+      back: "#B8D6F1",
+      title: "Design",
+      desc: "Intuitive user experiences.",
+    },
+    {
+      front: "#B8C6F1",
+      back: "#F1B8D9",
+      title: "Development",
+      desc: "Robust applications.",
+    },
+  ];
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {cards.map((card, index) => (
+        <Card
+          key={index}
+          frontColor={card.front}
+          backColor={card.back}
+          title={card.title}
+          description={card.desc}
+        />
+      ))}
+    </div>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="px-24 py-12 bg-white border-t border-gray-100">
+      <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+        <div className="flex flex-col gap-2">
+          <h2 className="text-2xl font-bold tracking-tighter text-black">
+            Diya
+          </h2>
+          <p className="text-xs font-medium text-gray-400 uppercase tracking-widest">
+            © {new Date().getFullYear()} All Rights Reserved
+          </p>
+        </div>
+        <div className="flex gap-8 text-sm font-semibold uppercase tracking-wider text-black">
+          <a href="#" className="hover:opacity-50">
+            LinkedIn
+          </a>
+          <a href="#" className="hover:opacity-50">
+            GitHub
+          </a>
+          <a href="#" className="hover:opacity-50">
+            Contact
+          </a>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+interface CardProps {
+  frontColor: string;
+  backColor: string;
+  title: string;
+  description: string;
 }
