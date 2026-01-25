@@ -1,9 +1,18 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import Link from "next/link";
 import Image from "next/image";
+import blackCoat from "@/public/black-coat.jpeg";
+import conference from "@/public/conference.jpeg";
+import flags from "@/public/flags.jpeg";
+import linkedinpp from "@/public/linkedinpp.jpeg";
+import mealPlanner from "@/public/meal planner.jpeg";
+import nycBpw from "@/public/nyc-bpw.jpeg";
+import unNepal from "@/public/UN-NEPAL.jpeg";
+import un from "@/public/UN.jpeg";
+import unhq from "@/public/unhq.jpeg";
 
 // 1. EXTEND WINDOW INTERFACE FOR TYPESCRIPT SAFETY
 declare global {
@@ -23,7 +32,7 @@ export default function Home() {
     window.history.scrollRestoration = "manual";
     window.scrollTo(0, 0);
 
-
+    // Now type-safe: no more 'any'
     const hasSeenIntro = window.hasSeenIntro;
 
     const ctx = gsap.context(() => {
@@ -136,7 +145,7 @@ export default function Home() {
           ref={subRef}
           className="mt-40 text-sm uppercase tracking-[0.3em] font-medium text-gray-500"
         >
-          Creative. Analytical. Intentional.
+          Designer, Artist, Creator
         </p>
       </div>
 
@@ -155,19 +164,59 @@ export default function Home() {
           </nav>
 
           <section className="grid grid-cols-12 gap-4">
+            {/* Left Column (Text and Lavender Box) */}
             <div className="col-span-6 flex flex-col gap-4 h-[600px]">
               <div className="h-[25%] flex items-start">
                 <p className="text-lg font-medium leading-snug text-black">
-                Multidisciplinary senior majoring in Computer Science and Business Analytics, based in New Jersey. 
-                Passionate about using technology, data, and design to improve financial systems, consulting workflows, and business operations.
+                  Multidisciplinary college senior majoring in Computer Science
+                  and Business Analytics and Living in New Jersey. Seeking
+                  experience in Finance, Technology Consulting & Business
+                  Operations.
                 </p>
               </div>
-              <div className="flex-1 bg-[#B8C6F1] rounded-3xl" />
+              <div className="flex-1 bg-[#B8C6F1] rounded-3xl relative overflow-hidden">
+                <Image
+                  src={conference}
+                  alt="UN Nepal"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover scale-110 object-[center_70%]"
+                />
+              </div>
             </div>
-            <div className="col-span-6 bg-[#E2E8C0] rounded-3xl h-150">
-            <Image src="app/photos/IMG_3989 2.JPG" width={0} height={0} alt="UN office"></Image></div>
-            <div className="col-span-8 bg-[#F1B8D9] rounded-3xl h-80" />
-            <div className="col-span-4 bg-[#89a3d7] rounded-3xl h-80" />
+
+            {/* Right Column (Green Box / Profile) */}
+            <div className="col-span-6 h-[600px] overflow-hidden bg-[#E2E8C0] rounded-3xl relative">
+              <Image
+                src={unNepal}
+                alt="Profile"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover scale-105 object-[center_90%]"
+              />
+            </div>
+
+            {/* Bottom Row - Large Pink Box */}
+            <div className="col-span-7 bg-[#F1B8D9] rounded-3xl h-80 relative overflow-hidden">
+              <Image
+                src={nycBpw}
+                alt="Conference"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover object-center"
+              />
+            </div>
+
+            {/* Bottom Row - Small Blue Box */}
+            <div className="col-span-5 bg-[#89a3d7] rounded-3xl h-80 relative overflow-hidden">
+              <Image
+                src={mealPlanner}
+                alt="NYC"
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover scale-100 object-[center_center]"
+              />
+            </div>
           </section>
         </main>
 
@@ -175,10 +224,10 @@ export default function Home() {
           <div className="flex justify-between items-end mb-12">
             <div className="max-w-4xl">
               <h2 className="text-6xl mb-4 font-bold uppercase tracking-tighter">
-                Leadership & Activities
+                Recent Research
               </h2>
               <p className="text-lg font-medium max-w-2xl text-gray-300 leading-snug">
-                '''Was honored to volunteer at the 28th General Assembly of the
+                Was honored to volunteer at the 28th General Assembly of the
                 Conference of NGOs... representing{" "}
                 <a
                   href="https://www.bpw-international.org/"
@@ -187,10 +236,8 @@ export default function Home() {
                 >
                   BPW International
                 </a>
-                .'''
-                Learning, leading, and making an impact through mentorship and research.
+                .
               </p>
-
             </div>
             <div className="flex gap-4 mb-2">
               <button
@@ -209,12 +256,32 @@ export default function Home() {
           </div>
           <div
             ref={scrollRef}
-            className="flex gap-6 overflow-x-auto no-scrollbar pb-4 scroll-smooth items-start"
+            className="flex gap-6 overflow-x-auto no-scrollbar pb-4  scroll-smooth items-start"
           >
-            <div className="min-w-[300px] h-[450px] bg-[#E2E8C0] rounded-3xl flex-shrink-0" />
-            <div className="min-w-[600px] h-[450px] bg-[#CFF7E2] rounded-3xl flex-shrink-0" />
-            <div className="min-w-[400px] h-[450px] bg-[#B8C6F1] rounded-3xl flex-shrink-0" />
-            <div className="min-w-[250px] h-[450px] bg-[#F1B8D9] rounded-3xl flex-shrink-0" />
+            <div className="h-[450px] bg-[#B8C6F1] relative overflow-hidden rounded-3xl flex-shrink-0">
+              <Image
+                src={unhq}
+                alt="Meal Planner Project"
+                className="h-full w-[600px] scale-100 object-cover object-[center,90%]"
+                /* When not using fill, Next.js static imports provide width/height automatically */
+              />
+            </div>
+            <div className="h-[450px] bg-[#B8C6F1] relative overflow-hidden rounded-3xl flex-shrink-0">
+              <Image
+                src={blackCoat}
+                alt="Meal Planner Project"
+                className="h-full w-auto object-cover"
+                /* When not using fill, Next.js static imports provide width/height automatically */
+              />
+            </div>
+            <div className="h-[450px] bg-[#B8C6F1] relative overflow-hidden rounded-3xl flex-shrink-0">
+              <Image
+                src={conference}
+                alt="Meal Planner Project"
+                className="h-full w-[600px] scale-100 object-cover object-[center,90%]"
+                /* When not using fill, Next.js static imports provide width/height automatically */
+              />
+            </div>
           </div>
         </section>
 
@@ -222,7 +289,7 @@ export default function Home() {
           <div className="flex justify-between items-end mb-12">
             <div className="max-w-4xl">
               <h2 className="text-6xl mb-4 font-bold uppercase tracking-tighter">
-                Projects/Fellowship
+                Projects
               </h2>
               <p className="text-lg font-medium max-w-2xl text-gray-700 leading-snug">
                 <Link

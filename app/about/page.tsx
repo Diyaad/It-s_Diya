@@ -43,7 +43,7 @@ export default function AboutPage() {
           Diya
         </Link>
         <div className="flex gap-8 text-sm font-medium">
-          <Link href="/about" className="underline underline-offset-4">
+          <Link href="/about" className="underline ">
             About
           </Link>
           <Link href="/projects" className="hover:underline">
