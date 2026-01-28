@@ -1,45 +1,90 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { gsap } from "gsap";
+import Image from "next/image";
 
 interface CardProps {
-  front: string; // Changed to match projectList keys
-  back: string; // Changed to match projectList keys
+  frontColor: string;
+  backColor: string;
+  image: string;
   title: string;
-  desc: string; // Changed to match projectList keys
+  subTitle: string;
+  tools: string;
+  description: string;
 }
 
-const ProjectCard = ({ front, back, title, desc }: CardProps) => {
+const ProjectCard = ({
+  frontColor,
+  backColor,
+  title,
+  description,
+  subTitle,
+  tools,
+  image,
+}: CardProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
   return (
     <div
-      className="project-card group h-[450px] [perspective:1000px] cursor-pointer opacity-0"
+      className="group h-[400px] [perspective:1000px] cursor-pointer"
       onClick={() => setIsFlipped(!isFlipped)}
     >
       <div
         className={`relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] ${isFlipped ? "[transform:rotateY(180deg)]" : ""}`}
       >
-        {/* FRONT SIDE */}
+        {/* Front Side */}
         <div
-          className="absolute inset-0 w-full h-full rounded-3xl p-10 flex flex-col justify-end [backface-visibility:hidden]"
-          style={{ backgroundColor: front }}
+          className="absolute inset-0 w-full h-full rounded-3xl gap-2 flex flex-col [backface-visibility:hidden]"
+          style={{ backgroundColor: frontColor }}
         >
-          <h3 className="text-3xl font-bold text-black uppercase tracking-tighter">
-            {title}
-          </h3>
-          <p className="text-sm text-black/50 font-bold uppercase tracking-widest mt-2">
-            View Details +
-          </p>
+          {/* Top Image Area */}
+          <div className="flex-1 flex items-start relative justify-center overflow-hidden">
+            <Image
+              src={image}
+              alt={title}
+              fill
+              className="w-full h-full object-cover object-[center_80%] rounded-2xl"
+            />
+          </div>
+
+          {/* Text Content with gap of 2 (0.5rem) from image */}
+          <div className="p-6">
+            <h1 className="text-xl font-bold text-black tracking-tight">
+              {title}
+            </h1>
+            <p className="text-sm text-black/70">{subTitle}</p>
+          </div>
         </div>
-        {/* BACK SIDE */}
+
+        {/* Back Side */}
         <div
-          className="absolute inset-0 w-full h-full rounded-3xl p-10 flex flex-col items-center justify-center text-center [backface-visibility:hidden] [transform:rotateY(180deg)]"
-          style={{ backgroundColor: back }}
+          className="absolute inset-0 w-full h-full rounded-3xl p-8 flex flex-col justify-center text-left [backface-visibility:hidden] [transform:rotateY(180deg)]"
+          style={{ backgroundColor: backColor }}
         >
-          <p className="text-xl font-medium text-black leading-tight">{desc}</p>
+          <div className="space-y-4">
+            <div>
+              <span className="text-md font-bold uppercase text-black block"></span>
+              <p className="text-sm font-medium text-black/80">{subTitle}</p>
+            </div>
+
+            <div>
+              <span className="text-md font-bold uppercase text-black block">
+                Tools
+              </span>
+              <p className="text-sm font-medium text-black/80">{tools}</p>
+            </div>
+
+            <div>
+              <span className="text-md font-bold uppercase text-black block">
+                Focus
+              </span>
+              <p className="text-sm font-medium text-black/80 leading-snug">
+                {description}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -77,52 +122,55 @@ export default function ProjectsPage() {
 
   const projectList = [
     {
-      title: "FinTech App",
-      desc: "A comprehensive dashboard for business analytics.",
-      front: "#E2E8C0",
-      back: "#D9D9D9",
+      frontColor: "#E2E8C0",
+      backColor: "#E2E8C0",
+      image: "/black-coat.jpeg",
+      title: "Data Analytics & Financial Insights",
+      subTitle: "Donor Contribution Prediction & Analysis",
+      tools: "Power BI, Excel, Data Analysis",
+      description:
+        "Analyzed university donor data to identify giving patterns and predict donor behavior, translating insights into actionable fundraising strategies.",
     },
     {
-      title: "Social Connect",
-      desc: "Redesigning social interaction through intuitive UI.",
-      front: "#CFF7E2",
-      back: "#B8C6F1",
+      frontColor: "#CFF7E2",
+      backColor: "#CFF7E2",
+      image: "/meal planner.jpeg",
+      title: "UX / Product Design",
+      subTitle: "Meal Planner App – UX/UI Prototype",
+      tools: "Figma",
+      description:
+        "Designed a user-centered meal planner prototype, applying UX principles and usability considerations to improve planning efficiency and accessibility.",
+    },
+
+    {
+      frontColor: "#D9EAF1",
+      backColor: "#D9EAF1",
+      image: "/unhq.jpeg",
+      title: "Research & NSF Fellowship",
+      subTitle: "Conference Presentation – CCSC",
+      tools: "Research Presenter",
+      description:
+        "Accepted to present findings on LMS usability and accessibility at the CCSC Conference, linking academic research with industry standards.",
     },
     {
-      title: "AI Researcher",
-      desc: "Leveraging ML to predict market trends.",
-      front: "#B8C6F1",
-      back: "#F1B8D9",
+      frontColor: "#FFE4BC",
+      backColor: "#FFE4BC",
+      image: "/linkedinpp.jpeg",
+      title: "Mentorship & Applied Teaching",
+      subTitle: "Data Analytics Mentor",
+      tools: "Python, Power BI, Excel",
+      description:
+        "Mentored high school and community college students on data analysis projects, guiding them from data exploration to actionable insights.",
     },
     {
-      title: "E-Commerce",
-      desc: "Headless commerce solution focused on speed.",
-      front: "#F1B8D9",
-      back: "#E2E8C0",
-    },
-    {
-      title: "Data Viz",
-      desc: "Transforming datasets into visual stories.",
-      front: "#D9EAF1",
-      back: "#CFF7E2",
-    },
-    {
-      title: "Branding",
-      desc: "Complete visual identity for a tech startup.",
-      front: "#FFE4BC",
-      back: "#D9D9D9",
-    },
-    {
-      title: "Operations",
-      desc: "Optimizing business workflows.",
-      front: "#E2E8C0",
-      back: "#B8C6F1",
-    },
-    {
-      title: "Web3 Portal",
-      desc: "Exploring DeFi and modern web apps.",
-      front: "#CFF7E2",
-      back: "#F1B8D9",
+      frontColor: "#E2E8C0",
+      backColor: "#E2E8C0",
+      image: "/conference.jpeg",
+      title: "Global Engagement & Service",
+      subTitle: "Volunteer – 28th CoNGO General Assembly",
+      tools: "United Nations / BPW International",
+      description:
+        "Assisted with event coordination and supported global NGO engagement during the 28th General Assembly of CoNGO at the United Nations.",
     },
   ];
 

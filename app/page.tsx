@@ -324,7 +324,15 @@ export default function Home() {
 }
 
 // ... Card, CardGridSection, and Footer components remain same as previous
-function Card({ frontColor, backColor, title, description }: CardProps) {
+function Card({
+  frontColor,
+  backColor,
+  title,
+  description,
+  subTitle,
+  tools,
+  image,
+}: CardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
   return (
     <div
@@ -334,22 +342,56 @@ function Card({ frontColor, backColor, title, description }: CardProps) {
       <div
         className={`relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] ${isFlipped ? "[transform:rotateY(180deg)]" : ""}`}
       >
+        {/* Front Side */}
         <div
-          className="absolute inset-0 w-full h-full rounded-3xl p-8 flex flex-col justify-end [backface-visibility:hidden]"
+          className="absolute inset-0 w-full h-full rounded-3xl gap-2 flex flex-col [backface-visibility:hidden]"
           style={{ backgroundColor: frontColor }}
         >
-          <h3 className="text-2xl font-bold text-black uppercase tracking-tighter">
-            {title}
-          </h3>
-          <p className="text-sm text-black/60 font-medium">Click to flip</p>
+          {/* Top Image Area */}
+          <div className="flex-1 flex items-start relative justify-center overflow-hidden">
+            <Image
+              src={image}
+              alt={title}
+              fill
+              className="w-full h-full object-cover object-[center_80%] rounded-2xl"
+            />
+          </div>
+
+          {/* Text Content with gap of 2 (0.5rem) from image */}
+          <div className="p-6">
+            <h1 className="text-xl font-bold text-black tracking-tight">
+              {title}
+            </h1>
+            <p className="text-sm text-black/70">{subTitle}</p>
+          </div>
         </div>
+
+        {/* Back Side */}
         <div
-          className="absolute inset-0 w-full h-full rounded-3xl p-8 flex flex-col items-center justify-center text-center [backface-visibility:hidden] [transform:rotateY(180deg)]"
+          className="absolute inset-0 w-full h-full rounded-3xl p-8 flex flex-col justify-center text-left [backface-visibility:hidden] [transform:rotateY(180deg)]"
           style={{ backgroundColor: backColor }}
         >
-          <p className="text-lg font-medium text-black leading-snug">
-            {description}
-          </p>
+          <div className="space-y-4">
+            <div className="pb-6">
+              <p className="text-xl font-bold text-black/80 ">{subTitle}</p>
+            </div>
+
+            <div>
+              <span className="text-md font-bold uppercase text-black block">
+                Tools
+              </span>
+              <p className="text-sm font-medium text-black/80">{tools}</p>
+            </div>
+
+            <div>
+              <span className="text-md font-bold uppercase text-black block">
+                Focus
+              </span>
+              <p className="text-sm font-medium text-black/80 leading-snug">
+                {description}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -360,21 +402,30 @@ function CardGridSection() {
   const cards = [
     {
       front: "#E2E8C0",
-      back: "#D9D9D9",
-      title: "Strategy",
-      desc: "Deep dive into business analytics.",
+      back: "#E2E8C0",
+      image: "/black-coat.jpeg",
+      title: "Data Analytics & Financial Insights",
+      subTitle: "Donor Contribution Prediction & Analysis",
+      tools: "Power BI, Excel, Data Analysis",
+      desc: "Analyzed university donor data to identify giving patterns and predict donor behavior, translating insights into actionable fundraising strategies.",
     },
     {
       front: "#CFF7E2",
-      back: "#B8D6F1",
-      title: "Design",
-      desc: "Intuitive user experiences.",
+      back: "#CFF7E2",
+      image: "/meal planner.jpeg",
+      title: "UX / Product Design",
+      subTitle: "Meal Planner App – UX/UI Prototype",
+      tools: "Figma",
+      desc: "Designed a user-centered meal planner prototype, applying UX principles and usability considerations to improve planning efficiency and accessibility.",
     },
     {
       front: "#B8C6F1",
-      back: "#F1B8D9",
-      title: "Development",
-      desc: "Robust applications.",
+      back: "#B8C6F1",
+      image: "/conference.jpeg",
+      title: "Research & NSF Fellowship",
+      subTitle: "NSF CICF Fellow – Computing Research",
+      tools: "National Science Foundation (Spring 2026)",
+      desc: "Selected as a fellow in a competitive NSF program supporting advanced computing research and leadership development.",
     },
   ];
   return (
@@ -384,7 +435,10 @@ function CardGridSection() {
           key={index}
           frontColor={card.front}
           backColor={card.back}
+          image={card.image}
           title={card.title}
+          subTitle={card.subTitle}
+          tools={card.tools}
           description={card.desc}
         />
       ))}
@@ -405,14 +459,14 @@ function Footer() {
           </p>
         </div>
         <div className="flex gap-8 text-sm font-semibold uppercase tracking-wider text-black">
-          <a href="#" className="hover:opacity-50">
+          <a
+            href="https://www.linkedin.com/in/diyaadh/"
+            className="hover:opacity-50"
+          >
             LinkedIn
           </a>
-          <a href="#" className="hover:opacity-50">
+          <a href="https://github.com/Diyaad" className="hover:opacity-50">
             GitHub
-          </a>
-          <a href="#" className="hover:opacity-50">
-            Contact
           </a>
         </div>
       </div>
@@ -423,6 +477,9 @@ function Footer() {
 interface CardProps {
   frontColor: string;
   backColor: string;
+  image: string;
   title: string;
+  subTitle: string;
+  tools: string;
   description: string;
 }
