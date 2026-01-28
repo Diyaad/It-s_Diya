@@ -224,19 +224,10 @@ export default function Home() {
           <div className="flex justify-between items-end mb-12">
             <div className="max-w-4xl">
               <h2 className="text-6xl mb-4 font-bold uppercase tracking-tighter">
-                Recent Research
+                Current Activities
               </h2>
               <p className="text-lg font-medium max-w-2xl text-gray-300 leading-snug">
-                Was honored to volunteer at the 28th General Assembly of the
-                Conference of NGOs... representing{" "}
-                <a
-                  href="https://www.bpw-international.org/"
-                  target="_blank"
-                  className="text-inherit underline underline-offset-4 hover:opacity-70"
-                >
-                  BPW International
-                </a>
-                .
+                a day to day 
               </p>
             </div>
             <div className="flex gap-4 mb-2">
@@ -253,6 +244,7 @@ export default function Home() {
                 →
               </button>
             </div>
+            
           </div>
           <div
             ref={scrollRef}
@@ -282,21 +274,23 @@ export default function Home() {
                 /* When not using fill, Next.js static imports provide width/height automatically */
               />
             </div>
+            
           </div>
+     
         </section>
 
         <section className="bg-[#ffffff] py-16 px-24 text-black overflow-hidden ">
           <div className="flex justify-between items-end mb-12">
             <div className="max-w-4xl">
               <h2 className="text-6xl mb-4 font-bold uppercase tracking-tighter">
-                Projects
+                Leadership & Projects
               </h2>
               <p className="text-lg font-medium max-w-2xl text-gray-700 leading-snug">
                 <Link
                   href="/projects"
                   className="flex items-center gap-1 group text-black no-underline"
                 >
-                  Research and Internship projects.{" "}
+                  {" "}
                   <span className="text-xl leading-none transition-transform group-hover:translate-x-1">
                     →
                   </span>
@@ -459,13 +453,12 @@ function Footer() {
           </p>
         </div>
         <div className="flex gap-8 text-sm font-semibold uppercase tracking-wider text-black">
-          <a
-            href="https://www.linkedin.com/in/diyaadh/"
-            className="hover:opacity-50"
-          >
+
+          <a href="https://www.linkedin.com/in/diyaadh/" target="_blank" rel="noopener noreferrer" className="hover:opacity-50" >
             LinkedIn
           </a>
-          <a href="https://github.com/Diyaad" className="hover:opacity-50">
+          <a href="https://github.com/Diyaad" target="_blank" rel="noopener noreferrer" className="hover:opacity-50">
+
             GitHub
           </a>
         </div>
