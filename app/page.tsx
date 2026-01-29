@@ -145,7 +145,7 @@ export default function Home() {
           ref={subRef}
           className="mt-40 text-sm uppercase tracking-[0.3em] font-medium text-gray-500"
         >
-          Designer, Artist, Creator
+          Curious, Analytical, Creative
         </p>
       </div>
 
@@ -169,7 +169,7 @@ export default function Home() {
               <div className="h-[25%] flex items-start">
                 <p className="text-lg font-medium leading-snug text-black">
                   Multidisciplinary college senior majoring in Computer Science
-                  and Business Analytics and Living in New Jersey. Seeking
+                  and Business Analytics. Seeking
                   experience in Finance, Technology Consulting & Business
                   Operations.
                 </p>
@@ -226,9 +226,6 @@ export default function Home() {
               <h2 className="text-6xl mb-4 font-bold uppercase tracking-tighter">
                 Current Activities
               </h2>
-              <p className="text-lg font-medium max-w-2xl text-gray-300 leading-snug">
-                a day to day 
-              </p>
             </div>
             <div className="flex gap-4 mb-2">
               <button
@@ -290,7 +287,7 @@ export default function Home() {
                   href="/projects"
                   className="flex items-center gap-1 group text-black no-underline"
                 >
-                  {" "}
+                  Dive In
                   <span className="text-xl leading-none transition-transform group-hover:translate-x-1">
                     →
                   </span>
@@ -397,28 +394,30 @@ function CardGridSection() {
     {
       front: "#E2E8C0",
       back: "#E2E8C0",
-      image: "/black-coat.jpeg",
+      image: "/donor.jpeg",
       title: "Data Analytics & Financial Insights",
-      subTitle: "Donor Contribution Prediction & Analysis",
+      subTitle: "Evaluation of Alumni Donors",
       tools: "Power BI, Excel, Data Analysis",
-      desc: "Analyzed university donor data to identify giving patterns and predict donor behavior, translating insights into actionable fundraising strategies.",
-    },
+      desc: "Analyzed university donor data to identify giving patterns and predict donor behavior. Key findings included: 45% of alumni donated, 52% of contributions came from organizations totaling $34.5M, and the highest-donating state was New Jersey. Insights revealed more contributions from non-alumni than alumni, guiding strategic fundraising efforts.",
+          link:"https://docs.google.com/presentation/d/1Ca4__uGOvJOnWx6yB_oh-cajBbk7UNHW/edit?usp=sharing&ouid=104806624081505129510&rtpof=true&sd=true",
+      },
     {
       front: "#CFF7E2",
       back: "#CFF7E2",
       image: "/meal planner.jpeg",
       title: "UX / Product Design",
-      subTitle: "Meal Planner App – UX/UI Prototype",
+      subTitle: "Meal Planner App - UX/UI Prototype",
       tools: "Figma",
-      desc: "Designed a user-centered meal planner prototype, applying UX principles and usability considerations to improve planning efficiency and accessibility.",
-    },
+      desc: "Designed a meal planner app prototype with a focus on usability and accessibility, applying UX/UI principles to make everyday planning easier for users.",
+          link:"https://www.figma.com/proto/eGTG38HbaNxUpDu7G5Ygro/8---left-no-crumbs?node-id=8-11&t=xhTZVlFEbPn7dA7n-1"
+      },
     {
       front: "#B8C6F1",
       back: "#B8C6F1",
       image: "/conference.jpeg",
       title: "Research & NSF Fellowship",
-      subTitle: "NSF CICF Fellow – Computing Research",
-      tools: "National Science Foundation (Spring 2026)",
+      subTitle: "NSF CICF Fellow - Spring 2026",
+      tools: "National Science Foundation ",
       desc: "Selected as a fellow in a competitive NSF program supporting advanced computing research and leadership development.",
     },
   ];

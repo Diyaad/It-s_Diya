@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import Link from "next/link";
 import { gsap } from "gsap";
+import Image from "next/image";
 
 export default function AboutPage() {
   const titleRef = useRef(null);
@@ -73,19 +74,13 @@ export default function AboutPage() {
               </h2>
               <div className="columns-1 md:columns-2 gap-10 text-lg leading-snug font-medium text-justify">
                 <p className="mb-6">
-                  Currently a college senior based in New Jersey, my work lives
-                  at the intersection of technical development and strategic
-                  data analysis.
+                  I'm a college senior in Computer Science and Business Analytics from New Jersey, passionate about building and designing solutions with humans in focus. My work blends technical development with strategic analysis, turning complex data into actionable insights that make a real difference.
                 </p>
                 <p className="mb-6">
-                  My experience extends beyond the screen. Volunteering at the
-                  28th General Assembly of CoNGO for the United Nations allowed
-                  me to represent BPW International.
+                  Behind the screen, I sing, whether it's on stage, at events, or even in the shower, music keeps me inspired and creative.
                 </p>
                 <p>
-                  Whether it is Tech Consulting or Finance, I am driven by the
-                  challenge of transforming complex data into actionable
-                  insights.
+                  I thrive on challenges, whether in tech, finance, or research, and I'm driven by the opportunity to create solutions that empower people.
                 </p>
               </div>
             </div>
@@ -98,10 +93,11 @@ export default function AboutPage() {
                   Focus Areas
                 </h3>
                 <ul className="space-y-2 text-xl font-bold tracking-tight uppercase">
+                  <li>UI/UX Design</li>
                   <li>Finance</li>
                   <li>Tech Consulting</li>
                   <li>Business Ops</li>
-                  <li>UI/UX Design</li>
+                  
                 </ul>
               </div>
               <div className="pt-8 border-t border-black">
@@ -112,8 +108,16 @@ export default function AboutPage() {
                   Seeking experience for the 2026 cycle.
                 </p>
               </div>
-              <div className="bg-[#D9D9D9] aspect-square w-full rounded-2xl flex items-center justify-center opacity-40 italic">
-                Profile Image
+              <div className="bg-[#D9D9D9] aspect-square w-full rounded-2xl flex items-center justify-center italic">
+                <div className="bg-[#D9D9D9] aspect-square w-full rounded-2xl overflow-hidden relative">
+              <Image
+                src="/linkedinpp.jpeg"   // path in your public folder
+                alt="Diya Adhikari"
+                fill                  // makes it cover the parent div
+                style={{ objectFit: "cover" }}
+                className="rounded-2xl"
+              />
+              </div>
               </div>
             </div>
           </div>
@@ -137,10 +141,11 @@ export default function AboutPage() {
                 Social
               </p>
               <div className="flex gap-4 font-bold">
-                <a href="#" className="hover:underline">
-                  LINKEDIN
+                <a href="https://www.linkedin.com/in/diyaadh/" target="_blank" rel="noopener noreferrer" className="hover:opacity-50" >
+                  LinkedIn
                 </a>
-                <a href="#" className="hover:underline">
+                <a href="https://github.com/Diyaad" target="_blank" rel="noopener noreferrer" className="hover:opacity-50">
+
                   GITHUB
                 </a>
               </div>
